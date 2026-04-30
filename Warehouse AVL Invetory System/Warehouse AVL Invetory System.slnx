@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Warehouse AVL Invetory System/Warehouse AVL Invetory System.vcxproj" />
+</Solution>
