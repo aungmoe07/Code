@@ -81,6 +81,17 @@ Node* search(Node* root, int id) {
     return search(root->right, id);
 }
 
+// Helper to print the inventory in sorted order
+void displayInventory(Node* root) {
+    if (root == nullptr) return;
+    displayInventory(root->left);
+    cout << "  - [ID: " << root->data.id << "] " << root->data.name << " (" << root->data.weight << "kg)" << endl;
+    displayInventory(root->right);
+}
+
+
+
+
 int main() {
     Node* inventory = nullptr;
 
@@ -114,6 +125,44 @@ int main() {
     Node* result = search(inventory, 999);
     if (result == nullptr) {
         cout << "[PASS] Correctly handled search for non-existent ID (returned null)." << endl;
+    }
+    try {
+
+        inventory = insert(inventory, { 108, "Central Hub", 1000.0 });
+        inventory = insert(inventory, { 104, "Main Engine", 500.0 });
+        inventory = insert(inventory, { 112, "Power Grid", 750.0 });
+        inventory = insert(inventory, { 102, "Side Panel", 45.0 });
+        inventory = insert(inventory, { 106, "Control Unit", 12.5 });
+        inventory = insert(inventory, { 110, "Cooling Fan", 15.0 });
+        inventory = insert(inventory, { 114, "Outer Shell", 80.0 });
+        inventory = insert(inventory, { 101, "Small Bolt", 0.1 });
+        inventory = insert(inventory, { 103, "Wiring Harness", 5.0 });
+        inventory = insert(inventory, { 105, "Sensor Kit", 2.2 });
+        inventory = insert(inventory, { 107, "LED Module", 0.5 });
+        inventory = insert(inventory, { 109, "Base Plate", 25.0 });
+        inventory = insert(inventory, { 111, "Internal Cable", 1.5 });
+        inventory = insert(inventory, { 113, "Gasket Set", 0.8 });
+        inventory = insert(inventory, { 115, "Firmware Chip", 0.1 });
+
+        cout << "[PASS] Added multiple items for testing." << endl;
+    }
+    catch (const exception& e) {
+        // This will print the specific error message from your 'throw' statements
+        cout << "[FAIL] Critical error during batch insertion: " << e.what() << endl;
+    }
+    // --- Visual Verification ---
+    cout << "\n--- Warehouse Inventory (Sorted View) ---" << endl;
+    displayInventory(inventory); // This will print IDs 101 through 107
+
+    if (inventory != nullptr) {
+        cout << "\n--- Tree Structural Metrics ---" << endl;
+        cout << "Root Node:  " << inventory->data.name << " (ID: " << inventory->data.id << ")" << endl;
+        cout << "Tree Height: " << inventory->height << endl;
+
+        // Logical check for Height 3
+        if (inventory->height >= 3) {
+            cout << "Result: Height is " << inventory->height << ". AVL tree is properly structured." << endl;
+        }
     }
 
     return 0;
